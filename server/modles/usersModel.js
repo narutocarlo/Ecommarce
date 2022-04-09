@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const dotenv = require('dotenv')
-// dotenv.config({path:'../config/env'})
+
+
+
 
 const UserSchema = new mongoose.Schema({
     name:{
@@ -48,24 +48,9 @@ UserSchema.pre('save', async function (nxt){
     if(!this.isModified("password")){
         nxt()
     }
-    
     this.password =await bcrypt.hash(this.password,10)
     
 })
-// jwt
-UserSchema.methods.getJWTToken = ()=>{
-    
-    return jwt.sign({id:this._id},process.env.JWT_SECRETKEY,{
-        expiresIn:process.env.JWT_EXPIRE,
-        
-    })
-}
-// compare password
-UserSchema.methods.comparPassword = async function  (enteredPassword){
-    
-    return await bcrypt.compare(enteredPassword,this.password);
-
-}
 
 
 

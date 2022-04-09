@@ -59,7 +59,7 @@ exports.deleteProduct =theCatchHandler (async(req,res,nxt)=>{
 
 const resultPage = 5
 
-exports.getAllProduct =theCatchHandler (async(req,res)=>{
+exports.getAllProduct =async(req,res)=>{
     const productCount = Product.countDocuments()
 
     const apiFeatures=new ApiFeatures(  Product.find(),req.query).searchFeature().filterFeature().pagenation(resultPage)
@@ -71,5 +71,5 @@ exports.getAllProduct =theCatchHandler (async(req,res)=>{
         return nxt (new ErrorHandler("product not found",404))
     }
     res.status(200).json({success:true,massage:"this is your Product",product})
-})
+}
 
